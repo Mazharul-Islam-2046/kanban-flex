@@ -1,6 +1,4 @@
-import mongoose, { Schema, Document } from "mongoose";
-import { IUser } from "./User";
-import { ISubTask } from "./SubTask";
+import mongoose, { Schema } from "mongoose";
 
 
 export enum TaskStatus {
@@ -11,17 +9,18 @@ export enum TaskStatus {
 }
 
 
-export interface ITask extends Document {
+export interface ITask {
+    _id?: mongoose.Types.ObjectId
     title: string;
     description: string;
     status: TaskStatus;
-    assignedTo: IUser[];
-    createdBy: IUser;
-    subTasks: ISubTask[]
+    assignedTo: mongoose.Types.ObjectId[];
+    createdBy: mongoose.Types.ObjectId;
+    subTasks: mongoose.Types.ObjectId[]
 }
 
 
-const TaskSchema: Schema<ITask> = new mongoose.Schema({
+const TaskSchema = new Schema<ITask>({
 
     title: {
         type: String,

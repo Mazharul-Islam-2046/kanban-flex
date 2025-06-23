@@ -1,8 +1,9 @@
 import bcrypt from "bcryptjs";
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 
-export interface IUser extends Document {
+export interface IUser {
+    _id?: mongoose.Types.ObjectId
     userName: string;
     name: string;
     email: string;
@@ -11,7 +12,7 @@ export interface IUser extends Document {
 }
 
 
-const UserSchema: Schema<IUser> = new mongoose.Schema({
+const UserSchema = new Schema<IUser>({
     userName: {
         type: String,
         required: [true, "User Name is required"],
