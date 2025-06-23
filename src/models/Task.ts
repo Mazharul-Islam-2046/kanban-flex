@@ -1,5 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 import { IUser } from "./User";
+import { ISubTask } from "./SubTask";
 
 
 export enum TaskStatus {
@@ -16,6 +17,7 @@ export interface ITask extends Document {
     status: TaskStatus;
     assignedTo: IUser[];
     createdBy: IUser;
+    subTasks: ISubTask[]
 }
 
 
@@ -42,6 +44,10 @@ const TaskSchema: Schema<ITask> = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: "User",
     },
+    subTasks: {
+        type: [Schema.Types.ObjectId],
+        ref: "SubTask",
+    }
 }, {
     timestamps: true,
     toJSON: {
