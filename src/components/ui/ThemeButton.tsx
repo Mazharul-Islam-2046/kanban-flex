@@ -23,7 +23,7 @@ const ThemeButton = () => {
 
   return (
     <Button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
-      {theme}
+      {theme === "dark" ? "light" : "dark"}
     </Button>
   );
 };
