@@ -1,4 +1,5 @@
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/Card";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import ThemeButton from "@/components/ui/ThemeButton";
 
 
@@ -20,6 +21,7 @@ export default function Home() {
         <CardFooter>Card Footer</CardFooter>
       </Card>
       <ThemeButton/>
+      <SidebarTrigger/>
     </div>
   );
 }
