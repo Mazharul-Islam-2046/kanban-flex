@@ -38,6 +38,7 @@ export interface ITask {
     assignedTo: mongoose.Types.ObjectId[];
     createdBy: mongoose.Types.ObjectId;
     subTasks: ISubTask[];
+    comments?: mongoose.Types.ObjectId[]
     updatedAt?: Date;
     createdAt?: Date;
 }
@@ -99,9 +100,14 @@ const TaskSchema = new Schema<ITask>({
     createdBy: {
         type: Schema.Types.ObjectId,
         ref: "User",
+        required: [true, "User is required"],
     },
     subTasks: {
         type: [SubTaskSchema],
+    },
+    comments: {
+        type: [Schema.Types.ObjectId],
+        ref: "Comment",
     }
 }, {
     timestamps: true,
@@ -133,6 +139,6 @@ TaskSchema.pre("save", function (next) {
 
 
 
-const Task = (mongoose.models.Task as mongoose.Model<ITask>) || mongoose.model<ITask>("Task", TaskSchema);
+const Task = mongoose.models.Task as mongoose.Model<ITask> || mongoose.model<ITask>("Task", TaskSchema);
 
 export default Task;
