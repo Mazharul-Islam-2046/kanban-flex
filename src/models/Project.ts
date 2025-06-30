@@ -5,7 +5,6 @@ export interface IProject {
   title: string;
   description: string;
   coverImage?: string;
-  tasks: mongoose.Types.ObjectId[];
   members: mongoose.Types.ObjectId[];
 }
 
@@ -21,10 +20,6 @@ const ProjectSchema = new Schema<IProject>({
   coverImage: {
     type: String,
     // required: [true, "Cover Image is required"],
-  },
-  tasks: {
-    type: [Schema.Types.ObjectId],
-    ref: "Task",
   },
   members: {
     type: [Schema.Types.ObjectId],
