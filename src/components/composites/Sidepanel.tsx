@@ -8,17 +8,21 @@ import {
   Command,
   Frame,
   GalleryVerticalEnd,
+  LayoutDashboardIcon,
   Map,
   PieChart,
   Settings2,
   SquareTerminal,
 } from "lucide-react"
 import {
-  Sidebar,
+    Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarGroup,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
 
@@ -163,11 +167,36 @@ export default function Sidepanel({ ...props }: React.ComponentProps<typeof Side
       <SidebarContent>
         <div>
             <SidebarMenu>
-                <div className="flex items-center gap-2 mb-4">
-                    <GalleryVerticalEnd className="h-4 w-4" />
-                    <p className="text-lg font-semibold group-data-[state=collapsed]:hidden group-data-[state=expanded]:block">My App</p>
-                </div>
+                <SidebarMenuButton>
+                    <div className="flex justify-center items-center gap-2 w-full">                        
+                        <LayoutDashboardIcon/>
+                        <p className="text-2xl">KanbanFlex</p>                        
+                    </div>
+                </SidebarMenuButton>
+                <div className="h-0.5 w-4/5 bg-[#ffffff20] mx-auto"></div>
             </SidebarMenu>
+            <SidebarContent>
+                <SidebarGroup>
+                    <SidebarMenu>
+                        {data.navMain.map((item) => (
+                            <SidebarMenuItem
+                                key={item.title}
+                                title={item.title}
+                            >
+                                <SidebarMenuButton>
+                                    <item.icon className="h-4 w-4" />
+                                    <span className="ml-2">{item.title}</span>
+                                </SidebarMenuButton>
+                                
+                            </SidebarMenuItem>
+                        ))}
+                    </SidebarMenu>
+                </SidebarGroup>
+            </SidebarContent>
+
+            <SidebarFooter>
+
+            </SidebarFooter>
         </div>
       </SidebarContent>
       <SidebarFooter>
