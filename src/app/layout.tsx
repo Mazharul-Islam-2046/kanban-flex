@@ -1,13 +1,20 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
+import {Itim} from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
-import { Sidebar, SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import Sidepanel from "@/components/composites/Sidepanel";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+
+const itimSans = Itim({
+  variable: "--font-itim",
   subsets: ["latin"],
+  display: "swap",
+  weight: "400",
 });
+
+
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -27,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${itimSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider 
           attribute="class" 
@@ -36,7 +43,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <SidebarProvider>
-          <Sidebar/>
+          <Sidepanel/>
           {children}
           </SidebarProvider>
         </ThemeProvider>
