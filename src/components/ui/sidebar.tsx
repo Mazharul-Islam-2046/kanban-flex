@@ -154,7 +154,7 @@ function SidebarProvider({
 function Sidebar({
   side = "left",
   variant = "floating",
-  collapsible = "offcanvas",
+  collapsible = "icon",
   className,
   children,
   ...props
@@ -204,7 +204,7 @@ function Sidebar({
       </Sheet>
     )
   }
-
+g
   return (
     <div
       className="group peer text-sidebar-foreground hidden md:block"
