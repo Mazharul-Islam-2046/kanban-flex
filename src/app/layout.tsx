@@ -4,7 +4,7 @@ import {Itim} from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import Sidepanel from "@/components/composites/Sidepanel";
+import Sidepanel from "@/components/composites/Sidepanel/Sidepanel";
 
 
 const itimSans = Itim({

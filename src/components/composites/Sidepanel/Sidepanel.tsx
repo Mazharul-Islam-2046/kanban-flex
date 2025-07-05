@@ -9,13 +9,12 @@ import {
     Frame,
     GalleryVerticalEnd,
     Home,
-    LayoutDashboardIcon,
     ListTodo,
     Map,
     PieChart,
     Plus,
     Settings2,
-    
+
 } from "lucide-react";
 import {
     Sidebar,
@@ -23,12 +22,13 @@ import {
     SidebarFooter,
     SidebarGroup,
     SidebarGroupLabel,
-    SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Button } from "../ui/Button";
+import { Button } from "../../ui/Button";
+import SidepanelHeader from "./SidepanelHeader";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 // This is sample data.
 const data = {
@@ -191,26 +191,16 @@ export default function Sidepanel({
         <Sidebar {...props}>
 
             {/* Sidebar Header */}
-            <SidebarHeader>
-                <SidebarMenu>
-                    <SidebarMenuItem className="flex items-center justify-center py-3">
-                        <SidebarMenuButton className="flex items-center">
-                            <LayoutDashboardIcon />
-                            <span className="text-2xl">KanbanFlex</span>
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
-                    <div className="p-2 mt-2">
-                        <div className="h-0.5 w-full bg-[#ffffff20] mx-auto"></div>
-                    </div>
-                </SidebarMenu>
-            </SidebarHeader>
+            <SidepanelHeader />
 
 
 
             {/* Sidebar Content */}
-            <div  className="grow">
+            <div className="grow flex flex-col gap-4 overflow-auto group-data-[collapsible=icon]:overflow-hidden">
+
                 <SidebarContent>
                     <SidebarGroup>
+
                         <SidebarMenu className="gap-3">
                             {data.navMain.map((item) => (
                                 <SidebarMenuItem key={item.title} title={item.title}>
@@ -227,11 +217,16 @@ export default function Sidepanel({
 
                     {/* Favorites */}
                     <SidebarGroup>
+
+                        <div className="p-2 mb-2 w-full">
+                            <div className="h-0.5 w-full bg-[#ffffff20] mx-auto"></div>
+                        </div>
+
                         <div className="flex flex-col gap-3">
                             {/* Sidebar Label */}
                             <div className="flex items-center justify-between">
                                 <SidebarGroupLabel>Favorites</SidebarGroupLabel>
-                                <span className="text-sm text-[#a9a9a9]">See More</span>
+                                <span className="text-sm text-[#a9a9a9] px-2">See More</span>
                             </div>
 
 
@@ -251,10 +246,16 @@ export default function Sidepanel({
 
                     {/* Projects */}
                     <SidebarGroup>
+
+                        <div className="p-2 mb-2 w-full">
+                            <div className="h-0.5 w-full bg-[#ffffff20] mx-auto"></div>
+                        </div>
+
+
                         <div className="flex flex-col gap-3">
                             <div className="flex items-center justify-between">
                                 <SidebarGroupLabel>Projects</SidebarGroupLabel>
-                                <span className="text-sm text-[#a9a9a9]">See More</span>
+                                <span className="text-sm text-[#a9a9a9]  pr-2">See More</span>
                             </div>
                             <SidebarMenu className="gap-3">
                                 {data.projects.map((project) => (
@@ -275,10 +276,27 @@ export default function Sidepanel({
             {/* Sidebar Footer */}
             <div className="p-2">
                 <SidebarFooter>
-                    <Button className="bg-dark-700 h-12 text-light-900 text-base hover:text-dark-500" variant={"default"}>
-                        Add New Project
-                        <Plus/>
-                    </Button>
+                    {/* <Button className="bg-dark-700 h-12 text-light-900 text-base hover:text-dark-500 group-data-[collapsible=icon]:h-6 group-data-[collapsible=icon]:w-6" variant={"default"}>
+                        <span className="text-lg group-data-[collapsible=icon]:hidden">New Project</span>
+                        <Plus />
+                    </Button> */}
+
+                    <Dialog>
+                        <DialogTrigger className="cursor-pointer">
+                            <div className="bg-dark-700 h-12 w-full text-light-900 text-base flex items-center justify-center gap-2 rounded-sm hover:bg-amber-50 hover:text-dark-500 group-data-[collapsible=icon]:h-6 group-data-[collapsible=icon]:w-6">
+                                <span className="text-lg group-data-[collapsible=icon]:hidden">New Project</span>
+                                <Plus size={16} />
+                            </div>
+                        </DialogTrigger>
+                        <DialogContent>
+                            <DialogHeader>
+                                <DialogTitle>New Project</DialogTitle>
+                                <DialogDescription>
+                                    Create a new project from scratch.
+                                </DialogDescription>
+                            </DialogHeader>
+                        </DialogContent>
+                    </Dialog>
                 </SidebarFooter>
             </div>
 
