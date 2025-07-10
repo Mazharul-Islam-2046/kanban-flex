@@ -139,7 +139,7 @@ export default function Home() {
 
             {/* Card Progress Bar */}
             <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-              <div className="bg-blue-600 h-2.5 rounded-full w-3/4"></div>
+              <div className="bg-purple-600 h-2.5 rounded-full w-3/4"></div>
             </div>
 
 
