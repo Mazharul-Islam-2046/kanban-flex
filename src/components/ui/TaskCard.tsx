@@ -5,7 +5,7 @@ import Badge from "./Badge";
 
 const TaskCard = () => {
   return (
-    <div className="px-4 py-6 bg-dark-700 rounded-lg flex flex-col gap-5">
+    <div className="px-4 py-6 bg-background rounded-lg flex flex-col gap-5 ring-2 ring-foreground/10 hover:ring-foreground/20 transition-all duration-200 ease-in-out">
 
       {/* Card Top Section */}
       <div className="flex items-center justify-between">

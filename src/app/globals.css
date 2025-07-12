@@ -137,3 +137,29 @@ body {
 .font-itim {
   font-family: var(--font-itim);
 }
+
+
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 1px;
+  height: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #4a5568;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #718096;
+}
+
+/* For Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #4a5568 transparent;
+}

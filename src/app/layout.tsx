@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Geist_Mono } from "next/font/google";
-import {Itim} from "next/font/google";
+import { Itim } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import Sidepanel from "@/components/composites/Sidepanel/Sidepanel";
+import ThemeButton from "@/components/ui/ThemeButton";
 
 
 const itimSans = Itim({
@@ -36,15 +37,31 @@ export default function RootLayout({
       <body
         className={`${itimSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider 
-          attribute="class" 
+        <ThemeProvider
+          attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
           <SidebarProvider>
-          <Sidepanel/>
-          {children}
+            <Sidepanel />
+            <div>
+              <div className="flex items-center justify-between gap-2 px-10 pt-8">
+
+                {/* Top Bar Left Part */}
+                <div className="flex items-center gap-2">
+                  <SidebarTrigger />
+                  <p className="text-3xl font-bold">Welcome to the dashboard</p>
+                </div>
+
+
+                {/* Top Bar Right Part */}
+                <div>
+                  <ThemeButton />
+                </div>
+              </div>
+              {children}
+            </div>
           </SidebarProvider>
         </ThemeProvider>
       </body>
