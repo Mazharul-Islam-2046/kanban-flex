@@ -1,11 +1,14 @@
 
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
+import taskReducer from './slices/Tasks/taskSlice';
+import projectReducer from './slices/Project/projectSlice';
 
 
 export const store = configureStore({
   reducer: {
-
+    task: taskReducer,
+    project: projectReducer,
   }
 
 })

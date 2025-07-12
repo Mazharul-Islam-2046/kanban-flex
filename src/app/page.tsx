@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/Card";
+import Column from "@/components/ui/Column";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import ThemeButton from "@/components/ui/ThemeButton";
 import { EllipsisVertical, ListChecks } from "lucide-react";
@@ -13,7 +14,7 @@ export default function Home() {
 
       </main>
       <div className="p-2 flex gap-4 justify-between items-stretch w-full h-full">
-        <Card className="w-full p-4 flex flex-col flex-grow-1 gap-4">
+        <Column>
           {/* Tasks Card */}
           <div className="px-4 py-6 bg-dark-700 rounded-lg flex flex-col gap-5">
 
@@ -175,7 +176,7 @@ export default function Home() {
 
 
           </div>
-        </Card>
+        </Column>
 
         <Card className="w-full p-4 flex-grow-1">
 
