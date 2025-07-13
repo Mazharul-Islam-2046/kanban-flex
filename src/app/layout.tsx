@@ -42,20 +42,22 @@ export default function RootLayout({
       <body
         className={`${itimSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <SidebarProvider>
-            <Sidepanel />
-            <div>
-              <Navbar/>
-              {children}
-            </div>
-          </SidebarProvider>
-        </ThemeProvider>
+        <div>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <SidebarProvider>
+              <Sidepanel />
+              <div className="w-full">
+                <Navbar />
+                {children}
+              </div>
+            </SidebarProvider>
+          </ThemeProvider>
+        </div>
       </body>
     </html>
   );
