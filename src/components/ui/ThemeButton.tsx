@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { Button } from "./Button";
+import { Moon, Sun } from "lucide-react";
 
 const ThemeButton = () => {
   const { setTheme, theme } = useTheme();
@@ -16,15 +17,15 @@ const ThemeButton = () => {
   if (!mounted) {
     return (
       <Button>
-        Theme
+        <Sun/>
       </Button>
     );
   }
 
   return (
-    <Button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
-      {theme === "dark" ? "light" : "dark"}
-    </Button>
+    <div className="cursor-pointer" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+      {theme === "dark" ? <Sun/> : <Moon/>}
+    </div>
   );
 };
 

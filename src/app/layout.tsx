@@ -3,9 +3,9 @@ import { Geist_Mono } from "next/font/google";
 import { Itim } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import Sidepanel from "@/components/composites/Sidepanel/Sidepanel";
-import ThemeButton from "@/components/ui/ThemeButton";
+import Navbar from "@/components/composites/Navbar";
 
 
 const itimSans = Itim({
@@ -32,6 +32,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
+
+
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -46,20 +51,7 @@ export default function RootLayout({
           <SidebarProvider>
             <Sidepanel />
             <div>
-              <div className="flex items-center justify-between gap-2 px-10 pt-8">
-
-                {/* Top Bar Left Part */}
-                <div className="flex items-center gap-2">
-                  <SidebarTrigger />
-                  <p className="text-3xl font-bold">Welcome to the dashboard</p>
-                </div>
-
-
-                {/* Top Bar Right Part */}
-                <div>
-                  <ThemeButton />
-                </div>
-              </div>
+              <Navbar/>
               {children}
             </div>
           </SidebarProvider>
