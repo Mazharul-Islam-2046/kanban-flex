@@ -11,7 +11,7 @@ export async function createProject(req: NextRequest) {
   try {
     const projectData: IProject = await req.json();
     const project = await projectService.createProject(projectData);
-    return NextResponse.json(project, { status: 201 });
+    return project
   } catch (error: any) {
     return NextResponse.json(
       { error: error.message },
@@ -23,7 +23,7 @@ export async function createProject(req: NextRequest) {
 export async function getProjects() {
   try {
     const projects = await projectService.getProjects();
-    return NextResponse.json(projects);
+    return projects;
   } catch (error: any) {
     return NextResponse.json(
       { error: error.message },
@@ -41,7 +41,7 @@ export async function getProjectById(req: NextRequest, id: string) {
         { status: 404 }
       );
     }
-    return NextResponse.json(project);
+    return project
   } catch (error: any) {
     return NextResponse.json(
       { error: error.message },

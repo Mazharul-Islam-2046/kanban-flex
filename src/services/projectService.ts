@@ -13,12 +13,13 @@ class ProjectService {
     await this.checkDbConnection();
     const project = new Project(projectData);
     return await project.save();
+    
   }
 
   // Get all projects
   async getProjects(): Promise<IProject[]> {
     await this.checkDbConnection();
-    return await Project.find().populate("members");
+    return await Project.find()  // In Future I will add---- .populate("members") to populate the members field
   }
 
   // Get a single project by ID
@@ -27,7 +28,7 @@ class ProjectService {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       throw new Error("Invalid project ID");
     }
-    return await Project.findById(id).populate("members");
+    return await Project.findById(id) // In Future I will add---- .populate("members") to populate the members field
   }
 
   // Update a project
