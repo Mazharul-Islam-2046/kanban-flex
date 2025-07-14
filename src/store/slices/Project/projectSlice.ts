@@ -1,51 +1,57 @@
-import { IProject } from "@/models/Project";
-import { createSlice } from "@reduxjs/toolkit";
 
-
-
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axiosInstance from '@/lib/axios/config';
+import { IProject } from '@/models/Project';
 
 interface ProjectState {
-    isLoading: boolean;
-    projects: IProject[];
+  projects: IProject[];
+  currentProject: IProject | null;
+  loading: boolean;
+  error: string | null;
 }
-
 
 const initialState: ProjectState = {
-    isLoading: false,
-    projects: [],
-}
+  projects: [],
+  currentProject: null,
+  loading: false,
+  error: null,
+};
 
-
+// Async thunk for fetching project by ID
+export const fetchProjectById = createAsyncThunk(
+  'project/fetchById',
+  async (projectId: string, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(`/projects/${projectId}`);
+      return response;
+    } catch (error: any) {
+      return rejectWithValue(error.message || 'Failed to fetch project');
+    }
+  }
+);
 
 const projectSlice = createSlice({
-    name: "project",
-    initialState,
-    reducers: {
-        setLoading: (state, action) => {
-            state.isLoading = action.payload;
-        },
-        setProjects: (state, action) => {
-            state.projects = action.payload;
-        },
-        addProject: (state, action) => {
-            state.projects.push(action.payload);
-        },
-        updateProject: (state, action) => {
-            const index = state.projects.findIndex(project => project._id === action.payload._id);
-            if (index !== -1) {
-                state.projects[index] = action.payload;
-            }
-        },
-        deleteProject: (state, action) => {
-            state.projects = state.projects.filter(project => project._id !== action.payload);
-        },
-    },
-    // extraReducers: (builder) => {
-        // Here I'll add the api calls and their respective reducers
-    // },
-})
+  name: 'project',
+  initialState,
+  reducers: {
+    // Your existing sync reducers...
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProjectById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchProjectById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.currentProject = action.payload.data as IProject;
+      })
+      .addCase(fetchProjectById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      });
+  },
+});
 
-
-
-export const { setLoading, setProjects, addProject, updateProject, deleteProject } = projectSlice.actions;
+export const { /* your existing actions */ } = projectSlice.actions;
 export default projectSlice.reducer;

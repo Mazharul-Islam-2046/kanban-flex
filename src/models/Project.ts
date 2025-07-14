@@ -6,6 +6,8 @@ export interface IProject {
   description: string;
   coverImage?: string;
   members: mongoose.Types.ObjectId[];
+  comments?: mongoose.Types.ObjectId[];
+  tasks?: mongoose.Types.ObjectId[];
 }
 
 const ProjectSchema = new Schema<IProject>({
@@ -24,6 +26,14 @@ const ProjectSchema = new Schema<IProject>({
   members: {
     type: [Schema.Types.ObjectId],
     ref: "User",
+  },
+  comments: {
+    type: [Schema.Types.ObjectId],
+    ref: "Comment",
+  },
+  tasks: {
+    type: [Schema.Types.ObjectId],
+    ref: "Task",
   },
 },
 {

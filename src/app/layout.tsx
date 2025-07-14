@@ -6,6 +6,8 @@ import { ThemeProvider } from "next-themes";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import Sidepanel from "@/components/composites/Sidepanel/Sidepanel";
 import Navbar from "@/components/composites/Navbar";
+import { store } from "@/store";
+import Providers from "@/providers/Providers";
 
 
 const itimSans = Itim({
@@ -42,23 +44,25 @@ export default function RootLayout({
       <body
         className={`${itimSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <SidebarProvider>
-              <Sidepanel />
-              <div className="w-full">
-                <Navbar />
-                {children}
-              </div>
-            </SidebarProvider>
-          </ThemeProvider>
+          <Providers>
+        <div className="w-full">
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <SidebarProvider>
+                <Sidepanel />
+                <div className="w-full">
+                  <Navbar />
+                  {children}
+                </div>
+              </SidebarProvider>
+            </ThemeProvider>
         </div>
+          </Providers>
       </body>
-    </html>
+    </html >
   );
 }
