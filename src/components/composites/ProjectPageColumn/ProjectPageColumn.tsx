@@ -36,10 +36,12 @@ const ProjectPageColumn = () => {
 
     console.log("Current Project", currentProject);
 
+
+    
+
     return (
-        <div>
-            <h1 className="text-2xl font-bold mb-4">{currentProject?.title}</h1>
-            <p className="mb-4">{currentProject?.description}</p>
+        <div className='flex flex-col items-center justify-center h-screen bg-gray-100 w-full'>
+            
         </div>
     );
 };

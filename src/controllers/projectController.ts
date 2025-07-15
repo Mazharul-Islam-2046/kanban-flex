@@ -12,9 +12,10 @@ export async function createProject(req: NextRequest) {
     const projectData: IProject = await req.json();
     const project = await projectService.createProject(projectData);
     return project
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: error.message },
+      { error: errorMessage },
       { status: 400 }
     );
   }
@@ -24,9 +25,10 @@ export async function getProjects() {
   try {
     const projects = await projectService.getProjects();
     return projects;
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: error.message },
+      { error: errorMessage },
       { status: 400 }
     );
   }
@@ -42,9 +44,10 @@ export async function getProjectById(req: NextRequest, id: string) {
       );
     }
     return project
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: error.message },
+      { error: errorMessage },
       { status: 400 }
     );
   }
@@ -61,9 +64,10 @@ export async function updateProject(req: NextRequest, id: string) {
       );
     }
     return NextResponse.json(updatedProject);
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: error.message },
+      { error: errorMessage },
       { status: 400 }
     );
   }
@@ -79,9 +83,10 @@ export async function deleteProject(req: NextRequest, id: string) {
       );
     }
     return NextResponse.json(deletedProject);
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: error.message },
+      { error: errorMessage },
       { status: 400 }
     );
   }
@@ -98,9 +103,10 @@ export async function addProjectMember(req: NextRequest, id: string) {
       );
     }
     return NextResponse.json(updatedProject);
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: error.message },
+      { error: errorMessage },
       { status: 400 }
     );
   }
@@ -117,9 +123,10 @@ export async function removeProjectMember(req: NextRequest, id: string) {
       );
     }
     return NextResponse.json(updatedProject);
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: error.message },
+      { error: errorMessage },
       { status: 400 }
     );
   }

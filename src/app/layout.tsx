@@ -6,7 +6,6 @@ import { ThemeProvider } from "next-themes";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import Sidepanel from "@/components/composites/Sidepanel/Sidepanel";
 import Navbar from "@/components/composites/Navbar";
-import { store } from "@/store";
 import Providers from "@/providers/Providers";
 
 

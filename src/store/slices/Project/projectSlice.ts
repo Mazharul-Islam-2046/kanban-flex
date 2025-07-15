@@ -24,8 +24,12 @@ export const fetchProjectById = createAsyncThunk(
     try {
       const response = await axiosInstance.get(`/projects/${projectId}`);
       return response;
-    } catch (error: any) {
-      return rejectWithValue(error.message || 'Failed to fetch project');
+    } catch (error: unknown) {
+      let errorMessage = 'Failed to fetch project';
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      return rejectWithValue(errorMessage);
     }
   }
 );
