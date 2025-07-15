@@ -40,7 +40,7 @@ const ProjectPageColumn = () => {
     
 
     return (
-        <div className='flex flex-col items-center justify-center h-screen bg-gray-100 w-full'>
+        <div className='flex flex-col items-center gap-4 justify-center h-screen bg-gray-100 w-full'>
             
         </div>
     );
