@@ -2,15 +2,13 @@ import ProjectPageColumn from "@/components/composites/ProjectPageColumn/Project
 
 
 
-const page = (params: { id: string }) => {
-
-    const { id } = params;
+const page = () => {
 
 
     return (
 
         <div>
-            <ProjectPageColumn id= {id}/>
+            <ProjectPageColumn/>
         </div>
 
 
