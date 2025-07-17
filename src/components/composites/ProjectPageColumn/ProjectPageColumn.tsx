@@ -1,6 +1,4 @@
 "use client";
-
-
 import { useProject } from '@/hooks/useProject';
 import { useParams } from 'next/navigation';
 import React, { useEffect } from 'react';
@@ -41,7 +39,9 @@ const ProjectPageColumn = () => {
 
     return (
         <div className='flex flex-col items-center gap-4 justify-center h-screen bg-gray-100 w-full'>
-            
+            {
+                
+            }
         </div>
     );
 };
