@@ -22,7 +22,6 @@ export interface ISubTask extends Document {
   title: string;
   description: string;
   status: subTasksStatus;
-  parentTask: mongoose.Types.ObjectId;
   assignedTo: mongoose.Types.ObjectId[]
 }
 
@@ -59,10 +58,6 @@ const SubTaskSchema = new Schema<ISubTask>({
         type: String,
         required: [true, "Status is required"],
         enum: Object.values(subTasksStatus),
-    },
-    parentTask: {
-        type: Schema.Types.ObjectId,
-        ref: "Task",
     },
     assignedTo: {
         type: [Schema.Types.ObjectId],
