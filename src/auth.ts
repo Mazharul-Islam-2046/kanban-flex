@@ -6,7 +6,7 @@ import GitHub from "next-auth/providers/github";
 import Credentials from "next-auth/providers/credentials";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import User, { Theme } from "@/models/User";
-import dbConnect from "./db/client";
+import dbConnect from "./lib/client";
 
 declare module "next-auth" {
   interface User {

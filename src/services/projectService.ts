@@ -1,4 +1,4 @@
-import dbConnect from "@/db/client";
+import dbConnect from "@/lib/client";
 import Project, { IProject } from "@/models/Project";
 import mongoose from "mongoose";
 

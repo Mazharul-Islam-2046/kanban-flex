@@ -1,4 +1,4 @@
-import dbConnect from "@/db/client";
+import dbConnect from "@/lib/client";
 import User, { IUser, IUserInput } from "@/models/User";
 
 
