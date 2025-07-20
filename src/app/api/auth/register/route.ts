@@ -1,14 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
-import User from "@/models/User";
-import bcrypt from "bcryptjs";
-import dbConnect from "@/db/client";
-
-
+import { registerUser } from "@/controllers/userController";
 
 export const POST = async (req: NextRequest) => {
-    await dbConnect();
-    const { userName, email, password, name } = await req.json();
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await User.create({ userName, email, password: hashedPassword, name });
-    return NextResponse.json({ user });
+  try {
+    const newUser = registerUser(req);
+    return NextResponse.json(
+      {
+        success: true,
+        user: newUser,
+      },
+      { status: 201 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : "Unknown error" },
+      { status: 400 }
+    );
+  }
 };

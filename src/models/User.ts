@@ -3,91 +3,118 @@ import mongoose, { Schema } from "mongoose";
 import jwt from "jsonwebtoken";
 
 export enum Theme {
-    LIGHT = "light",
-    DARK = "dark"
+  LIGHT = "light",
+  DARK = "dark",
 }
 
-
-
-export interface IUser {
-    _id?: mongoose.Types.ObjectId
-    userName: string;
-    name: string;
-    email: string;
-    password: string;
-    avatar: string;
-    theme: Theme;
+export interface IUserInput {
+  _id?: mongoose.Types.ObjectId;
+  userName: string;
+  name: string;
+  email: string;
+  password?: string; // Make optional for OAuth users
+  role: "user" | "admin";
+  avatar?: string;
+  theme: Theme;
 }
 
+export interface IUser extends IUserInput, Document {
+  emailVerified?: Date; // Add for Auth.js compatibility
+  accounts?: mongoose.Types.ObjectId[]; // For linked accounts
 
-const UserSchema = new Schema<IUser>({
+  isPasswordMatched(password: string): Promise<boolean>;
+  generateAccessToken(): string | null;
+  generateRefreshToken(): string | null;
+}
+
+const UserSchema = new Schema<IUser>(
+  {
     userName: {
-        type: String,
-        required: [true, "User Name is required"],
+      type: String,
+      required: [true, "User Name is required"],
+      unique: true,
     },
     name: {
-        type: String,
-        required: [true, "Name is required"],
+      type: String,
+      required: [true, "Name is required"],
     },
     email: {
-        type: String,
-        required: [true, "Email is required"],
-        match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+      type: String,
+      required: [true, "Email is required"],
+      unique: true,
+      match:
+        /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
     },
     password: {
-        type: String,
-        required: [true, "Password is required"],
-        match: /(?=^.{6,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)[0-9a-zA-Z!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{6,}/,
-        select: false
+      type: String,
+      required: function () {
+        // Only require password for non-OAuth users
+        return !this.accounts || this.accounts.length === 0;
+      },
+      match:
+        /(?=^.{6,}$)(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s)[0-9a-zA-Z!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{6,}/,
+      select: false,
+    },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
     },
     avatar: {
-        type: String,
-        // required: [true, "Avatar is required"],
+      type: String,
     },
     theme: {
-        type: String,
-        enum: Object.values(Theme),
-        default: Theme.LIGHT
+      type: String,
+      enum: Object.values(Theme),
+      default: Theme.LIGHT,
     },
-},
-{
+    emailVerified: {
+      type: Date,
+    },
+    accounts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Account",
+      },
+    ],
+  },
+  {
     timestamps: true,
     toJSON: {
-        virtuals: true
+      virtuals: true,
+      transform: function (doc, ret) {
+        delete ret.password; // Always remove password from JSON output
+        return ret;
+      },
     },
     toObject: {
-        virtuals: true
-    }
-});
-
-
+      virtuals: true,
+    },
+  }
+);
 
 // add indexes
 UserSchema.index({ email: 1 }, { unique: true });
 UserSchema.index({ userName: 1 }, { unique: true });
 
-
 // Password Bcrypt
-UserSchema.pre("save", async function(next) {
-
-    if (!this.isModified("password")) return next();
-
+UserSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  if (this.password) {
     this.password = await bcrypt.hash(this.password, 10);
-    next();
+  }
+  next();
 });
 
-
-
 // isPasswordMatched
-UserSchema.methods.isPasswordMatched = async function(password: string): Promise<boolean> {
-    return await bcrypt.compare(password, this.password);
-}
-
-
+UserSchema.methods.isPasswordMatched = async function (
+  password: string
+): Promise<boolean> {
+  return this.password ? await bcrypt.compare(password, this.password) : false;
+};
 
 // generate access token
-UserSchema.methods.generateAccessToken = function () {
-
+UserSchema.methods.generateAccessToken = function (): string | null {
   if (!process.env.ACCESS_TOKEN_SECRET) {
     return null;
   }
@@ -96,8 +123,7 @@ UserSchema.methods.generateAccessToken = function () {
     return null;
   }
 
-  const expiresIn = parseInt(process.env.ACCESS_TOKEN_EXPIRY, 10)
-
+  const expiresIn = parseInt(process.env.ACCESS_TOKEN_EXPIRY, 10);
 
   return jwt.sign(
     {
@@ -113,12 +139,8 @@ UserSchema.methods.generateAccessToken = function () {
   );
 };
 
-
-
-
 // generate refresh token
-UserSchema.methods.generateRefreshToken = function () {
-
+UserSchema.methods.generateRefreshToken = function (): string | null {
   if (!process.env.REFRESH_TOKEN_SECRET) {
     return null;
   }
@@ -127,8 +149,7 @@ UserSchema.methods.generateRefreshToken = function () {
     return null;
   }
 
-  const expiresIn = parseInt(process.env.REFRESH_TOKEN_EXPIRY, 10)
-
+  const expiresIn = parseInt(process.env.REFRESH_TOKEN_EXPIRY, 10);
 
   return jwt.sign(
     {
@@ -136,14 +157,12 @@ UserSchema.methods.generateRefreshToken = function () {
     },
     process.env.REFRESH_TOKEN_SECRET,
     {
-      expiresIn
+      expiresIn,
     }
   );
 };
 
-
-const User = mongoose.models.User as mongoose.Model<IUser> || mongoose.model<IUser>("User", UserSchema);
-
-
-
+const User =
+  (mongoose.models.User as mongoose.Model<IUser>) ||
+  mongoose.model<IUser>("User", UserSchema);
 export default User;
