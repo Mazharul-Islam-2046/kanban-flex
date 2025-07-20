@@ -31,8 +31,12 @@ const UserSchema = new Schema<IUser>(
   {
     userName: {
       type: String,
-      required: [true, "User Name is required"],
+      required: function() {
+        // Only require userName for non-OAuth users or completed OAuth users
+        return !this.accounts || this.accounts.length === 0;
+      },
       unique: true,
+      sparse: true, // Allow multiple null values for OAuth users
     },
     name: {
       type: String,
