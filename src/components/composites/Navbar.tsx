@@ -16,7 +16,7 @@ const Navbar = () => {
 
 
     return (
-        <div className="flex items-center justify-between gap-2 px-10 pt-8">
+        <div className="flex items-center justify-between py-8 gap-2 px-10 pt-8 border-b border-[#f8f8f820]">
 
             {/* Top Bar Left Part */}
             <div className="flex items-center gap-2">
