@@ -117,7 +117,7 @@ const data = {
             ],
         },
         {
-            title: "favorites",
+            title: "Favorites",
             url: "#",
             icon: FileHeart,
         },
