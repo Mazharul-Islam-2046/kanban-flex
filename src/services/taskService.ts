@@ -1,4 +1,4 @@
-import dbConnect from "@/db/client";
+import dbConnect from "@/lib/client";
 import Task, { ISubTask, ITask } from "@/models/Task";
 import mongoose from "mongoose";
 

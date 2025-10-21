@@ -24,7 +24,7 @@ async function dbConnect(): Promise<void> {
 
   } catch (error) {
       console.error("Error connecting to MongoDB:", error);
-      process.exit(1);
+      throw new Error("MongoDB connection failed");
   }
 
 }
