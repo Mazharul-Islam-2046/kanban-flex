@@ -16,6 +16,9 @@ export default function ProfileCompletionModal({ isOpen, onClose }: ProfileCompl
   const { data: session, update } = useSession();
   const router = useRouter();
 
+
+  console.log(session);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -40,7 +43,7 @@ export default function ProfileCompletionModal({ isOpen, onClose }: ProfileCompl
         setError(data.error || 'Failed to complete profile');
       }
     } catch (err) {
-      setError('An error occurred. Please try again.');
+      setError(`An error occurred. Please try again. ${err}`);
     } finally {
       setIsLoading(false);
     }
