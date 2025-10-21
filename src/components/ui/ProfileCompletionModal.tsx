@@ -9,6 +9,8 @@ interface ProfileCompletionModalProps {
   onClose: () => void;
 }
 
+// Bhong Bhang Comment
+
 export default function ProfileCompletionModal({ isOpen, onClose }: ProfileCompletionModalProps) {
   const [userName, setUserName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
